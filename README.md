@@ -1,6 +1,4 @@
 # bankSimulationEcho
-## Meaning of the project:
-The point was to move the functionality of https://github.com/Matterlinkk/goosestasks to the echo web framework
 ## Project composition
 <ol>
   <li>The main structure is Client, identifier, account in the form of a structure consisting of a balance and mutex value, and a channel that collects values of the Transaction structure type</li>
