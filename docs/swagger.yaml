@@ -1,0 +1,175 @@
+info:
+  contact: {}
+host: localhost:1488
+schemes:
+  - http
+paths:
+  /client:
+    post:
+      consumes:
+      - application/json
+      description: Create a new client with the specified ID and add it to the database
+      parameters:
+      - description: Client ID
+        in: query
+        name: id
+        required: true
+        type: integer
+      - description: Client balance
+        in: query
+        name: balance
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+  /client/{from}/send/{to}/{amount}:
+    post:
+      consumes:
+      - application/json
+      description: Sending funds from one client to another
+      parameters:
+      - description: Sender ID
+        in: path
+        name: from
+        required: true
+        type: integer
+      - description: Receiver ID
+        in: path
+        name: to
+        required: true
+        type: integer
+      - description: Transaction object
+        in: path
+        name: amount
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+  /client/{id}/balance:
+    get:
+      consumes:
+      - application/json
+      description: Getting current client balance by client ID
+      parameters:
+      - description: Customer ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+  /client/{id}/process/transaction:
+    post:
+      consumes:
+      - application/json
+      description: Processing a customer transaction by its ID
+      parameters:
+      - description: Customer ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+  /client/{id}/transaction:
+    post:
+      consumes:
+      - application/json
+      description: Create a new transaction and add it to the client's transaction
+        channel
+      parameters:
+      - description: Client ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Transaction amount
+        in: query
+        name: amount
+        required: true
+        type: integer
+      - description: Is Debit transaction (true for debit, false for credit)
+        in: query
+        name: isDebit
+        required: true
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "409":
+          description: StatusConflict
+          schema:
+            type: string
+  /clients:
+    get:
+      consumes:
+      - application/json
+      description: Get information about all clients including their IDs and balances
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+swagger: "2.0"
